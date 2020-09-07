@@ -2,6 +2,8 @@ import Todoitem from 'Components/todoitem'
 
 class Todolist {
 	constructor(preference) {
+		
+
 		if (typeof preference !== 'object') {
 			throw new Error('Todolist preference must be an object')
 		}
@@ -13,9 +15,8 @@ class Todolist {
 			}
 		} else if (typeof preference.parent === 'object') {
 			this.todolistParent = preference.parent
-
 		} else {
-			throw new Error('Todolist parent must be either a query selector or an object')
+			throw new Error('Todolist parent must be either a selector or an object')
 		}
 
 		this.todos = []
@@ -24,31 +25,48 @@ class Todolist {
 		this.createTodoButton = document.querySelector(preference.createTodoButtonSelector)
 		this.todoClasses = preference.classes
 
+		if (preference.saveValue) {
+			window.addEventListener('unload', () => this.save())
+		} if (preference.writeValue) {
+			this.write()
+		}
+
 		if (this.todoInput && this.createTodoButton) {
 			this.createTodoButton.addEventListener('click', () => this.createTodo(this.todoInput.value))
 		}
-
-		console.log(this.todoStatus)
-
 	}
 	
 
-	createTodo(name) {
-		console.log('!!!!!!!!!!', this.todos.length)
+	createTodo(name, index, status) {
 		this.todos.push(new Todoitem({
 			parent: this.todolistParent,
 			name: name,
-			index: this.todos.length + 1,
+			index: index ?? this.todos.length + 1,
 			classes: this.todoClasses,
-			status: this.todoStatus,
+			status: status ?? this.todoStatus,
 		}))	
+		console.log('!!!!!!!!!!', this.todos.length)
+
 		this.lastTodoitemIndex = this.todos.length - 1	
 		this.todos[this.lastTodoitemIndex].todoitemCloseButton.addEventListener('click', () => this.deleteTodoitem(this.lastTodoitemIndex))
 	}
 
+	save() {
+		let todolistInfo = this.todos.map(item => item.save())
+		localStorage.setItem('todolistInfo', JSON.stringify(todolistInfo))
+		console.log(localStorage.getItem('todolistInfo'))
+	}
+
+	write() {
+		let todolistInfo = JSON.parse(localStorage.getItem('todolistInfo'))
+		console.log(todolistInfo)
+		for (let todoitem of todolistInfo) {
+			this.createTodo(todoitem.name, todoitem.index, todoitem.status)
+		}
+	}
+
 	deleteTodoitem(todoitemIndex) {
-		this.todos[todoitemIndex].close()
-		delete this.todos[todoitemIndex]
+		this.todos.pop(todoitemIndex)
 		console.log(this.todos, '!!!!!!!!!!!!!')
 	} 
 }

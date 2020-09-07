@@ -15,6 +15,8 @@ const myTodolist = new Todolist({
 	todoInputSelector: '.todolist__input-name',
 	createTodoButtonSelector: '.todolist__create-todo',
 	todoStatus: false,
+	saveValue: true,
+	writeValue: true,
 	classes: {
 		todoitem: ['todolist__item',],
 		todoStatus: ['todolist__item-status'],
