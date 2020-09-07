@@ -1,0 +1,54 @@
+.timer
+	display flex
+	justify-content center
+	&__inner 
+		padding 1em
+		width max-content
+		min-width 20em
+
+		border .5em groove var(--first-color)
+
+		text-align center
+
+	&__title
+		font 2em 'sans-serif'  
+		font-weight 400
+		
+		color green
+		
+	&__content
+		background-color var(--green)
+
+		font-size 1.4em
+		color var(--third-color)
+	  
+	&__button
+		min-height 2.5em
+		min-width 7em
+
+		outline none
+		border .2em solid var(--second-color)
+		background-color var(--first-color)
+
+		color var(--fourth-color)
+		font-size: 1.4em
+
+		transition all .5s ease
+		
+		&:hover
+			color var(--third-color)
+
+		&:first-child
+			border-right-width 0
+			border-radius 1em 0 0 1em
+
+		&:last-child
+			border-radius 0 1em 1em 0
+			border-right-width .2em  
+
+		&.--only-child 
+			border-radius 1em		
+			border-right-width .2em  
+
+
+

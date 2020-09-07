@@ -1,0 +1,32 @@
+extends ../layouts/main
+
+block vars
+	- var title = 'my app title'
+
+block content
+	main.main
+		section.timer
+			.timer__inner
+				h1.timer__title timer
+				p.timer__content 
+					span.timer__content-item.timer__content-hours 0
+					| :
+					span.timer__content-item.timer__content-minutes 0
+					| :
+					span.timer__content-item.timer__content-seconds 0
+					| .
+					span.timer__content-item.timer__content-miliseconds 0
+				.timer__progressbar
+				.timer__buttons
+					button.timer__button-main.timer__button.timer__button-start start
+					button.timer__button.timer__button-clear.nonDisplay clear
+					
+		section.todolist
+			.todolist__inner
+				.todolist__form
+					label.todolist__label(for = 'todolist__input-name') todo name
+					input#todolist__input-name.todolist__input-name(type = 'text' name = 'todolist__input-name')
+					button.todolist__create-todo create todo
+				.todolist__items
+
+
